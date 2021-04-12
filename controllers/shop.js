@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 
 
+
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
