@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const session = require('express-session')
 const csrf = require('csurf');
+const flash = require('connect-flash')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const MONGODB_URI = 'mongodb+srv://eag58914:Phoenix171894!@cluster0.j0qwc.mongodb.net/shop'
 
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret:'my secret', resave:false, saveUninitialized: false, store:store}))
 app.use(csrfProtection);
+app.use(flash())
 
 
 app.use((req, res, next) => {
