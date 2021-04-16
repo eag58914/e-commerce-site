@@ -227,6 +227,10 @@ form {
   background:rgb(153, 192, 235);
 
 }
+.user-message-error{
+  border-color: red;
+  background: rgb(220, 124, 124);
+}
 
 @media (min-width: 768px) {
   .main-header__nav {
