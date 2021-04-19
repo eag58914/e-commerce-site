@@ -1,5 +1,13 @@
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const nodemailer = require('nodemailer')
+const nodeMailerSendgrid = require('nodemailer-sendgrid')
+
+
+const transporter = nodemailer.createTransport(nodeMailerSendgrid({
+
+    apiKey: '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'
+}))
 
 
 exports.getLogin = (req, res, next) => {
@@ -96,6 +104,13 @@ User.findOne({email: email}).then(userDoc =>{
   })
 }).then(result=>{
   res.redirect('/login')
+   return transporter.sendMail({
+    to: email,
+    from:'garciaelco18@gmail.com',
+    subject: 'Sign Up Succeeded',
+    html:'<h1> You successfully signed up! </h1>'
+  })
+
 }).catch(err=>{
   console.log(err)
 })
