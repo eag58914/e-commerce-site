@@ -4,7 +4,7 @@ const Order = require('../models/order');
 
 
 exports.getProducts = (req, res, next) => {
-  Product.find()
+  Product.find({userId : req.user._id})
     .then(products => {
       res.render('shop/product-list', {
         prods: products,
