@@ -7,7 +7,7 @@ const adminController = require('../controllers/admin');
 const router = express.Router();
 const isAuth = require('../middleware/is-auth')
 
-const {body} =require('express-validator/check')
+const {body} =require('express-validator')
 
 // // /admin/add-product => GET
   router.get('/add-product',[
