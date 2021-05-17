@@ -1,5 +1,6 @@
 const Product = require('../models/product')
-const {validationResult} = require('express-validator')
+const {validationResult} = require('express-validator');
+const product = require('../models/product');
 
 
 
@@ -46,7 +47,6 @@ exports.postAddProduct = (req, res, next) => {
       hasError: true,
       product: {
         title: title,
-        imageUrl: imageUrl,
         price: price,
         description: description
       },
@@ -125,6 +125,11 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
 
+  if(image){
+    product.updatedImageUrl = image.path
+    
+  }
+
   const errors = validationResult(req)
 
   if(!errors.isEmpty()){
@@ -133,7 +138,8 @@ exports.postEditProduct = (req, res, next) => {
       path: '/admin/edit-product',
       editing: true,
       hasError:true,
-      product: {title:updatedTitle,
+      product: {
+        title:updatedTitle,
         price:updatedPrice,
         description:updatedDesc,
         _id: prodId
