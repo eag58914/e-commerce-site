@@ -101,7 +101,6 @@ exports.getEditProduct = (req, res, next) => {
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
-   throw new Error('Dummy')
     .then(product => {
       if (!product) {
         return res.redirect('/');
@@ -111,11 +110,16 @@ exports.getEditProduct = (req, res, next) => {
         path: '/admin/edit-product',
         editing: editMode,
         product: product,
+        hasError: false,
         errorMessage: null,
         validationErrors: []
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -185,8 +189,8 @@ exports.getProducts = (req, res, next) => {
         });
 };
 
-exports.postDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.deleteProduct = (req, res, next) => {
+  const prodId = req.params.productId;
   Product.findById(prodId).then(product =>{
 
     if(!product){
@@ -196,7 +200,7 @@ return next(new Error('Product not found'))
     return Product.deleteOne({_id: prodId, userId: req.user._id})
   }).then(() => {
       console.log('DESTROYED PRODUCT');
-      res.redirect('/admin/products');
+      res.status(200).json({message:"Success"})
     })
-    .catch(err => console.log(err));
+    .catch(res.status(500).json({message:"Deleting Product Failed"}));
 };

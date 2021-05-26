@@ -30,6 +30,7 @@ const {body} =require('express-validator')
     body('price').isFloat(), body('description').isLength({min:3,max:200})
   ],isAuth, adminController.postEditProduct);
 
- router.post('/delete-product',isAuth, adminController.postDeleteProduct);
+
+router.delete('/product/:productId', isAuth, adminController.deleteProduct)
 
 module.exports = router;
