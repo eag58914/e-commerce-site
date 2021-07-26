@@ -8,8 +8,10 @@ const csrf = require('csurf');
 const flash = require('connect-flash')
 const multer = require('multer')
 const MongoDBStore = require('connect-mongodb-session')(session)
-const MONGODB_URI = 'mongodb+srv://eag58914:Phoenix171894!@cluster0.j0qwc.mongodb.net/shop'
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.j0qwc.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`
 const errorController = require('./controllers/error');
+const helmet = require('helmet')
+const compression = require('compression')
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -49,6 +51,10 @@ app.set('views', 'views');
  const shopRoutes = require('./routes/shop');
  const authRoutes = require('./routes/auth');
 
+ 
+
+app.use(helmet())
+app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
