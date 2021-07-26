@@ -12,6 +12,9 @@ const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
 const errorController = require('./controllers/error');
 const helmet = require('helmet')
 const compression = require('compression')
+const morgan = require('morgan')
+const fs = require('fs')
+const https = require('https')
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -44,6 +47,9 @@ const store = new MongoDBStore({
 })
 const csrfProtection = csrf();
 
+const privateKey = fs.readFileSync('server.key')
+const certificate = fs.readFileSync('server.cert')
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -51,10 +57,11 @@ app.set('views', 'views');
  const shopRoutes = require('./routes/shop');
  const authRoutes = require('./routes/auth');
 
- 
+ const accessLogStream = fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'}) 
 
 app.use(helmet())
 app.use(compression())
+app.use(morgan('combined', {stream:accessLogStream}))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
@@ -100,6 +107,10 @@ app.use((req, res, next) => {
 app.use(errorController.get404);
 
 mongoose.connect( MONGODB_URI, { useNewUrlParser: true })
-.then(app.listen(3000)).catch(error=>{
+.then(
+  app.listen(process.env.PORT || 3000)
+  // https.createServer({key:privateKey, cert: certificate},app).listen(3000)
+)
+  .catch(error=>{
   console.log(error)
 })
