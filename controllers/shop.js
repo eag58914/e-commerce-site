@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path');
 const { application } = require('express');
 const PDFDocument = require('pdfkit')
-const stripe = require('stripe') ('sk_test_fjCDsNR8iXSlhSOPS9FsKu1s00um5qsuDG')
+const stripe = require('stripe') (`${process.env.STRIPE_KEY}`)
 
 const ITEMS_PER_PAGE = 4;
 
