@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "MONGO_USER=eag58914 MONGO_PASSWORD=Phoenix171894! MONGO_DEFAULT_DATABASE=shop STRIPE_KEY=sk_test_fjCDsNR8iXSlhSOPS9FsKu1s00um5qsuDG node app.js",
+    "start": "node app.js",
     "start-server": "node app.js",
     "start:dev": "nodemon app.js"
   },
