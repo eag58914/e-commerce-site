@@ -49,7 +49,7 @@ const User = require('./models/user')
 
 const app = express();
 const store = new MongoDBStore({
-  uri: `dummy uri`,
+  uri: `mongodb+srv://eag58914:f1gztXpsqWRBhZdp@cluster0.ohyguvt.mongodb.net/test`,
   collection: 'sessions'
 })
 const csrfProtection = csrf();
@@ -112,7 +112,7 @@ app.use((req, res, next) => {
 app.use(errorController.get404);
 
 
-mongoose.connect( `dummy connection`, 
+mongoose.connect( `mongodb+srv://eag58914:f1gztXpsqWRBhZdp@cluster0.ohyguvt.mongodb.net/test`, 
 { useNewUrlParser: true, useUnifiedTopology:true, ssl:true, sslValidate:false,   },)
 .then(
   app.listen(process.env.PORT || 3000)
