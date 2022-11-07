@@ -16,6 +16,7 @@ const fs = require('fs')
 const https = require('https')
 
 
+
 //const privateKey = fs.readFileSync('server.key')
 //const certificate = fs.readFileSync('server.cert')
 //  https.createServer({key:privateKey, cert: certificate},app)
@@ -48,7 +49,7 @@ const User = require('./models/user')
 
 const app = express();
 const store = new MongoDBStore({
-  uri: `mongodb+srv://eag58914:f1gztXpsqWRBhZdp@cluster0.ohyguvt.mongodb.net/test`,
+  uri: `dummy uri`,
   collection: 'sessions'
 })
 const csrfProtection = csrf();
@@ -111,7 +112,7 @@ app.use((req, res, next) => {
 app.use(errorController.get404);
 
 
-mongoose.connect( `mongodb+srv://eag58914:f1gztXpsqWRBhZdp@cluster0.ohyguvt.mongodb.net/test`, 
+mongoose.connect( `dummy connection`, 
 { useNewUrlParser: true, useUnifiedTopology:true, ssl:true, sslValidate:false,   },)
 .then(
   app.listen(process.env.PORT || 3000)
