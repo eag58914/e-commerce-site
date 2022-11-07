@@ -8,13 +8,18 @@ const csrf = require('csurf');
 const flash = require('connect-flash')
 const multer = require('multer')
 const MongoDBStore = require('connect-mongodb-session')(session)
-const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.aqoaj.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`
 const errorController = require('./controllers/error');
 const helmet = require('helmet')
 const compression = require('compression')
 const morgan = require('morgan')
 const fs = require('fs')
 const https = require('https')
+
+
+//const privateKey = fs.readFileSync('server.key')
+//const certificate = fs.readFileSync('server.cert')
+//  https.createServer({key:privateKey, cert: certificate},app)
+
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -24,6 +29,7 @@ const fileStorage = multer.diskStorage({
     cb(null, new Date().toISOString() + '-' + file.originalname);
   }
 });
+
 
 
 const fileFilter = (req, file, cb) => {
@@ -42,13 +48,11 @@ const User = require('./models/user')
 
 const app = express();
 const store = new MongoDBStore({
-  uri: MONGODB_URI,
+  uri: `mongodb+srv://eag58914:f1gztXpsqWRBhZdp@cluster0.ohyguvt.mongodb.net/test`,
   collection: 'sessions'
 })
 const csrfProtection = csrf();
 
-//const privateKey = fs.readFileSync('server.key')
-//const certificate = fs.readFileSync('server.cert')
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -106,10 +110,11 @@ app.use((req, res, next) => {
 
 app.use(errorController.get404);
 
-mongoose.connect( MONGODB_URI, { useNewUrlParser: true })
+
+mongoose.connect( `mongodb+srv://eag58914:f1gztXpsqWRBhZdp@cluster0.ohyguvt.mongodb.net/test`, 
+{ useNewUrlParser: true, useUnifiedTopology:true, ssl:true, sslValidate:false,   },)
 .then(
   app.listen(process.env.PORT || 3000)
-  // https.createServer({key:privateKey, cert: certificate},app).listen(3000)
 )
   .catch(error=>{
   console.log(error)
