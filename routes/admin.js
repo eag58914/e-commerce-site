@@ -9,6 +9,7 @@ const isAuth = require('../middleware/is-auth')
 
 const {body} =require('express-validator')
 
+
 // // /admin/add-product => GET
   router.get('/add-product',[
     body('title').isString().isLength({min:3}).trim(),
@@ -22,6 +23,7 @@ const {body} =require('express-validator')
 
 // // /admin/add-product => POST
  router.post('/add-product', isAuth,adminController.postAddProduct);
+ // admin edit product
 
   router.get('/edit-product/:productId',isAuth, adminController.getEditProduct);
 
