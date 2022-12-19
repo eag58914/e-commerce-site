@@ -22,17 +22,22 @@ exports.getProducts = (req, res, next) => {
         .limit(ITEMS_PER_PAGE);
     })
     .then(products => {
-      res.render('shop/product-list', {
-        prods: products,
-        pageTitle: 'Products',
-        path: '/products',
-        currentPage: page,
-        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-        hasPreviousPage: page > 1,
-        nextPage: page + 1,
-        previousPage: page - 1,
-        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+      //  res.render('shop/product-list', {
+      //    prods: products,
+      //    pageTitle: 'Products',
+      //    path: '/products',
+      //    currentPage: page,
+      //    hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+      //    hasPreviousPage: page > 1,
+      //    nextPage: page + 1,
+      //    previousPage: page - 1,
+      //    lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+      //  })
+
+      res.json({
+        prods:products
       })
+      
     })
     .catch(err => {
       console.log(err);
