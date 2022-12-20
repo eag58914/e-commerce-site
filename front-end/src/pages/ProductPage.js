@@ -1,11 +1,15 @@
 
 import React, { Component } from "react";
+import ImageSlider from "../components/ImageSlider";
+
 
  class ProductPage extends Component{
     render(){
         return(
             <div>
-                <h1>Product Page</h1>
+                <ImageSlider />
+                    
+                    
             </div>
         )
     }

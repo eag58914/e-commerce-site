@@ -1,35 +1,17 @@
-import axios from 'axios'
-
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import ProductPage from './components/ProductPage';
-import ResponsiveAppBar from './components/NavBar';
+import ProductPage from './pages/ProductPage';
+import HomePage from './pages/HomePage';
 
-const baseurl = "http://localhost:3000/products"
-
-function App() {
-  const [data, setData] = useState([{"id":"123245","title":"A Book","imageUrl":"https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg","description":"This is an awesome book!","price":"19"},{"id":"0.41607315815753076","title":"fasfd","imageUrl":"fdasfs","description":"fadsfads","price":"12"}])
-
-
-  useEffect(()=>{
-    axios.get(baseurl).then((response)=>{
-      setData(response.data)
-    })
-  })
-
-
+function App() { 
   return(
   <div>
-    <header className="App-header"></header>
-    <ResponsiveAppBar />     
-      <ul>
-      {data.map((element, index)=>
-        <li key={index}>{element.title} {element.price}{element.imageUrl} </li>)}
-        </ul>
-<BrowserRouter>
-<Routes>
-  <Route  exact path="/products"  element={<ProductPage/>}/>
-</Routes>
+<header className="App-header"></header>
+    <BrowserRouter>
+        <Routes>
+          <Route exact path='/home' element={<HomePage />}/>
+          <Route  exact path="/products"  element={<ProductPage/>}/>
+        </Routes>
 </BrowserRouter>
 
 
