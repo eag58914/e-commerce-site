@@ -7,7 +7,7 @@ import ImageSlider from "../components/ImageSlider";
     render(){
         return(
             <div>
-                <ImageSlider />
+                <h1>ProductPage</h1>
                     
                     
             </div>
